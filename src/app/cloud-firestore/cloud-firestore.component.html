@@ -1,0 +1,154 @@
+<div class="card">
+    <form name="form" (ngSubmit)=" onSubmit(f)" #f="ngForm" novalidate>
+        <div class="card-body pb-0">
+            <div class="card">
+                <div class="card-header main-search dash-search">
+                    <h1 style="text-align: center;">
+                        MANAGE COUNTRY- Using Cloud Firestore
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="card">
+                        <div *ngIf="!updateCountry" class="card-header">
+                            Add New Country
+                            <h3 *ngIf="formSubmitted" style="text-align: center; color: green;">New Country has been
+                                added
+                                successfully...</h3>
+                            <h3 *ngIf="isDelete" style="text-align: center; color: green;">Country has been deleted
+                                successfully...</h3>
+                        </div>
+
+                        <div *ngIf="updateCountry" class="card-header">
+                            Update Country
+                            <h3 *ngIf="formSubmitted" style="text-align: center; color: green;">Existing Country has
+                                been updated
+                                successfully...</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="center-form">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Name<span
+                                                    class="mandatoryFieldColor">*</span></label>
+                                            <input type="text" class="form-control" name="CountryName" autofocus
+                                                [(ngModel)]="Country.CountryName" #country="ngModel"
+                                                [ngClass]="{ 'is-invalid': f.submitted && country.invalid }" required />
+                                            <div *ngIf="f.submitted && country.invalid" class="invalid-feedback">
+                                                <div *ngIf="country.errors.required || country.pristine==false">Country
+                                                    Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Country short name<span
+                                                    class="mandatoryFieldColor">*</span></label>
+                                            <input type="text" class="form-control" name="CountryShortName"
+                                                [(ngModel)]="Country.CountryShortName" #countryShortName="ngModel"
+                                                [ngClass]="{ 'is-invalid': f.submitted && countryShortName.invalid }"
+                                                required />
+                                            <div *ngIf="f.submitted && countryShortName.invalid"
+                                                class="invalid-feedback">
+                                                <div
+                                                    *ngIf="countryShortName.errors.required || countryShortName.pristine==false">
+                                                    Country Short
+                                                    Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Currency name<span
+                                                    class="mandatoryFieldColor">*</span></label>
+                                            <input type="text" class="form-control" name="Currency"
+                                                [(ngModel)]="Country.Currency" #currencyName="ngModel"
+                                                [ngClass]="{ 'is-invalid': f.submitted && currencyName.invalid }"
+                                                required />
+                                            <div *ngIf="f.submitted && currencyName.invalid" class="invalid-feedback">
+                                                <div
+                                                    *ngIf="currencyName.errors.required || currencyName.pristine==false">
+                                                    Currency Name is
+                                                    required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Currency short name<span
+                                                    class="mandatoryFieldColor">*</span></label>
+                                            <input type="text" class="form-control" name="CurrencyShortName"
+                                                [(ngModel)]="Country.CurrencyShortName" #currencyShortName="ngModel"
+                                                [ngClass]="{ 'is-invalid': f.submitted && currencyShortName.invalid }"
+                                                required />
+                                            <div *ngIf="f.submitted && currencyShortName.invalid"
+                                                class="invalid-feedback">
+                                                <div
+                                                    *ngIf="currencyShortName.errors.required || currencyShortName.pristine==false">
+                                                    Currency
+                                                    Short Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12">
+                                        <div class="btn-group mb-3 mt-2 cmn-btn-grp">
+                                            <button *ngIf="!updateCountry" type="submit" style="margin-left:1px"
+                                                class="btn btn-success">Add
+                                                Country</button>
+                                            <button *ngIf="updateCountry" type="submit" style="margin-left:1px"
+                                                class="btn btn-success">Update
+                                                Country</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">Country Management</div>
+                        <div class="card-body position-relative">
+                            <div class="table-responsive cnstr-record product-tbl">
+                                <table class="table table-bordered heading-hvr">
+                                    <thead>
+                                        <tr>
+                                            <th class="active">Country Name</th>
+                                            <th>Short name</th>
+                                            <th>Currency name</th>
+                                            <th>Currency short name</th>
+                                            <th width="60">&nbsp;</th>
+                                            <th width="60">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let countryList of countries">
+                                            <td>{{countryList.CountryName}}</td>
+                                            <td>{{countryList.CountryShortName | uppercase}}</td>
+                                            <td>{{countryList.Currency}}</td>
+                                            <td>{{countryList.CurrencyShortName | uppercase}}</td>
+                                            <td class="case-record">
+                                                <button type="button" class="btn btn-info"
+                                                    (click)="editCountry(countryList.id)">Edit</button>
+
+                                            </td>
+                                            <td> <button type="button" class="btn btn-danger"
+                                                    (click)="deleteCountry(countryList.id)">Delete</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
